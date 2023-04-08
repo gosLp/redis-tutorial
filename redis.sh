@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Install Redis
+sudo apt-get update
+sudo apt-get install redis-server
+
 # Install Node.js
 sudo apt-get update
 sudo apt-get install nodejs
@@ -16,9 +20,15 @@ cd myproject
 npm init -y
 tsc --init
 
-#add tsnode to your project
+#install dependencies
 npm install ts-node --save-dev
 npm install --save-dev @types/node
+npm install --save express redis connect-redis express-session @types/express @types/redis @types/connect-redis @types/express-session
+
+#Create a new typescript file
+touch src/index.ts
+
 
 #Add a script to package.json
-"dev": "ts-node src/index.ts"
+echo ' insert this into the scripts in package.json:  { "dev": "ts-node src/index.ts" } ' 
+    
