@@ -13,14 +13,19 @@ const RedisStore = connectRedis(session);
 let redisClient = new Redis();
 
 
-
+declare module 'express-session' {
+    export interface SessionData {
+        views?: number;
+    }
+}
 
 
 app.use(session({
-    store:  new RedisStore({ client: redisClient }),
+    store:  new RedisStore({ client: redisClient, prefix: 'myapp:' }),
     secret:"your-secret-key",
-    resave: false,
+    resave: true,
     saveUninitialized: false,
+    cookie: {maxAge: 2*60*60*1000}
 }));
 
 app.get("/people", (req, res) => {
@@ -54,6 +59,7 @@ app.get("/people", (req, res) => {
    
 });
 
+
 app.get("/people/:id", async (req, res) => {
     const id = req.params.id;
 
@@ -75,6 +81,20 @@ app.get("/people/:id", async (req, res) => {
     });
 });
 
+//example route to check if session is working
+app.get("/checksession", (req, res) => {
+    if (req.session.views) {
+    
+        req.session.views++;
+        res.setHeader('Content-Type', 'text/html');
+        res.write('<p>views: ' + req.session.views + '</p>');
+        res.write('<p>expires in: ' + (req.session.cookie.maxAge! / 1000) + 's</p>');
+        res.end();
+    } else {
+        req.session.views = 1;
+        res.end('welcome to the session demo. refresh!');
+    }
+}) ; 
 
 app.listen(3000, () => {
     console.log("Server started on port 3000");

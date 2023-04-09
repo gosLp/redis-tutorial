@@ -23,7 +23,7 @@ tsc --init
 #install dependencies
 npm install ts-node --save-dev
 npm install --save-dev @types/node
-npm install --save express redis connect-redis express-session @types/express @types/redis @types/connect-redis @types/express-session
+npm install --save express ioredis connect-redis express-session @types/express @types/ioredis @types/connect-redis @types/express-session
 
 #Create a new typescript file
 touch src/index.ts
