@@ -12,10 +12,12 @@ instead you'll need a Linux subsystem like WSL or WSL2 which is likely already i
 in your Linux subsystem
 Install Redis 
 
-**For Example Ubuntu WSL2*
+**For Example Ubuntu WSL2**
+```
 {
     sudo apt-get install redis
 }
+```
 
 this will install redis-server and redis-cli as well
 
